@@ -1,23 +1,6 @@
 # CMD-DESIGN
 The command design of Agenda.
 
-## Table of Contents
-
-- [Supporting Commands](#supportingCommands)
-    * [register](#register)
-    * [login](#login)
-    * [logout](#logout)
-    * [listUsers](#listUsers)
-    * [deleteUser](#deleteUser)
-    * [createMeeting](#createMeeting)
-    * [changeParticipants](#changeParticipants)
-    * [listMeetings](#listMeetings)
-    * [quitMeeting](#quitMeeting)
-    * [cancelMeeting](#cancelMeeting)
-    * [clearMeetings](#clearMeetings)
-
-
- <span id="supportingCommands"/>
 ## Supporting Commands
 ```
 register            Register user.
@@ -33,7 +16,7 @@ cancelMeeting       Cancel a meeting.
 clearMeetings       Clear all meetings.
 ```
 
-<span id="register"/>
+
 ### register
 Register user account with specific infomation.
 
@@ -48,7 +31,6 @@ Flags:
 ```
 
 
-<span id="login"/>
 ### login
 User login.
 
@@ -63,14 +45,12 @@ Flags:
 ```
 
 
-<span id="logout"/>
 ### logout
 Logout the current login user.
 
 Usage: `agenda logout`
 
 
-<span id="listUsers"/>
 ### listUsers
 List all registered users' information except for passwords.
 
@@ -79,7 +59,6 @@ Use these information to invite others to attend your meetings.
 Usage: `agenda listUsers`
 
 
-<span id="deleteUser"/>
 ### deleteUser
 Delete current login user.
 
@@ -88,7 +67,6 @@ Delete current login user.
 Usage: `agenda deleteUser`
 
 
-<span id="createMeeting"/>
 ### createMeeting
 Create a meeting.
 
@@ -105,7 +83,6 @@ Flags:
 ```
 
 
-<span id="changeParticipants"/>
 ### changeParticipants
 Change(add/delete) Participants of a meeting created by current login user.
 
@@ -119,7 +96,6 @@ Flags:
 ```
 
 
-<span id="listMeetings"/>
 ### listMeetings
 List all meetings attended by current login user.
 
@@ -131,7 +107,7 @@ Flags:
     -e, --end          string   end time    (format: yyyy-mm-dd)
 ```
 
-<span id="quitMeeting"/>
+
 ### quitMeeting
 Quit a meeting attended by current login user.
 
@@ -143,7 +119,6 @@ Flags:
 ```
 
 
-<span id="cancelMeeting"/>
 ### cancelMeeting
 Cancel a meeting created by current login user.
 
@@ -155,7 +130,6 @@ Flags:
 ```
 
 
-<span id="clearMeetings"/>
 ### clearMeetings
 clear all meetings created by current login user.
 
