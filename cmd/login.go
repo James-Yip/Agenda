@@ -15,7 +15,7 @@
 package cmd
 
 import (
-	"fmt"
+	"agenda/service"
 
 	"github.com/spf13/cobra"
 )
@@ -27,7 +27,12 @@ var loginCmd = &cobra.Command{
 	Long: `User login.
 Note: you need to login before using most of the functions in Agenda`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("login called")
+		username, _ := cmd.Flags().GetString("user")
+		password, _ := cmd.Flags().GetString("password")
+		// fmt.Println("username: " + username)
+		// fmt.Println("password: " + password)
+
+		service.Login(username, password)
 	},
 }
 
@@ -40,7 +45,7 @@ func init() {
 	// and all subcommands, e.g.:
 	// loginCmd.PersistentFlags().String("foo", "", "A help for foo")
 
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// loginCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// local flags for loginCmd
+	loginCmd.Flags().StringP("user", "u", "", "Username")
+	loginCmd.Flags().StringP("password", "p", "", "Password")
 }

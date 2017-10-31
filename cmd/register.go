@@ -15,7 +15,7 @@
 package cmd
 
 import (
-	"fmt"
+	"agenda/service"
 
 	"github.com/spf13/cobra"
 )
@@ -28,7 +28,15 @@ var registerCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		// fmt.Println("register called")
 		username, _ := cmd.Flags().GetString("user")
-		fmt.Println("register called by " + username)
+		password, _ := cmd.Flags().GetString("password")
+		email, _ := cmd.Flags().GetString("email")
+		phone, _ := cmd.Flags().GetString("phone")
+		// fmt.Println("username: " + username)
+		// fmt.Println("password: " + password)
+		// fmt.Println("email: " + email)
+		// fmt.Println("phone: " + phone)
+
+		service.Register(username, password, email, phone)
 	},
 }
 
@@ -41,8 +49,9 @@ func init() {
 	// and all subcommands, e.g.:
 	// registerCmd.PersistentFlags().String("foo", "", "A help for foo")
 
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// registerCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	registerCmd.Flags().StringP("user", "u", "Anonymous", "Help message for username")
+	// local flags for registerCmd
+	registerCmd.Flags().StringP("user", "u", "", "Username")
+	registerCmd.Flags().StringP("password", "p", "", "Password")
+	registerCmd.Flags().StringP("email", "e", "", "Email")
+	registerCmd.Flags().StringP("phone", "t", "", "Phone")
 }

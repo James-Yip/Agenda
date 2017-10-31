@@ -15,7 +15,7 @@
 package cmd
 
 import (
-	"fmt"
+	"agenda/service"
 
 	"github.com/spf13/cobra"
 )
@@ -26,7 +26,9 @@ var clearMeetingsCmd = &cobra.Command{
 	Short: "Clear all meetings",
 	Long:  `clear all meetings created by current login user.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("clearMeetings called")
+		// fmt.Println("clearMeetings called")
+
+		service.ClearMeetings()
 	},
 }
 

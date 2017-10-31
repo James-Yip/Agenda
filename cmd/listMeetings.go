@@ -15,7 +15,7 @@
 package cmd
 
 import (
-	"fmt"
+	"agenda/service"
 
 	"github.com/spf13/cobra"
 )
@@ -26,7 +26,12 @@ var listMeetingsCmd = &cobra.Command{
 	Short: "List all meetings",
 	Long:  `List all meetings attended by current login user.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("listMeetings called")
+		startTime, _ := cmd.Flags().GetString("start")
+		endTime, _ := cmd.Flags().GetString("end")
+		// fmt.Println("startTime: " + startTime)
+		// fmt.Println("endTime: " + endTime)
+
+		service.ListMeetings(startTime, endTime)
 	},
 }
 
@@ -39,7 +44,7 @@ func init() {
 	// and all subcommands, e.g.:
 	// listMeetingsCmd.PersistentFlags().String("foo", "", "A help for foo")
 
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// listMeetingsCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// local flags for listMeetingsCmd
+	listMeetingsCmd.Flags().StringP("start", "s", "", "start time (format: yyyy-mm-dd/hh:mm)")
+	listMeetingsCmd.Flags().StringP("end", "e", "", "end time (format: yyyy-mm-dd/hh:mm)")
 }

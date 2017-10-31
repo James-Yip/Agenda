@@ -1,23 +1,6 @@
 # CMD-DESIGN
 The command design of Agenda.
 
-## Table of Contents
-
-- [Supporting Commands](#supportingCommands)
-    * [register](#register)
-    * [login](#login)
-    * [logout](#logout)
-    * [listUsers](#listUsers)
-    * [deleteUser](#deleteUser)
-    * [createMeeting](#createMeeting)
-    * [changeParticipants](#changeParticipants)
-    * [listMeetings](#listMeetings)
-    * [quitMeeting](#quitMeeting)
-    * [cancelMeeting](#cancelMeeting)
-    * [clearMeetings](#clearMeetings)
-
-
- <span id="supportingCommands"/>
 ## Supporting Commands
 ```
 register            Register user.
@@ -26,14 +9,14 @@ logout              User logout.
 listUsers           List all registered users.
 deleteUser          Delete current login user.
 createMeeting       Create a meeting.
-changeParticipants  Change(add/delete) meeting Participants.
+changeParticipators  Change(add/delete) meeting participators.
 listMeetings        List all meetings.
 quitMeeting         Quit a meeting.
 cancelMeeting       Cancel a meeting.
 clearMeetings       Clear all meetings.
 ```
 
-<span id="register"/>
+
 ### register
 Register user account with specific infomation.
 
@@ -44,11 +27,10 @@ Flags:
     -u, --user     string   Username
     -p, --password string   Password
     -e, --email    string   Email
-    -p, --phone    string   Phone
+    -t, --phone    string   Phone
 ```
 
 
-<span id="login"/>
 ### login
 User login.
 
@@ -63,14 +45,12 @@ Flags:
 ```
 
 
-<span id="logout"/>
 ### logout
 Logout the current login user.
 
 Usage: `agenda logout`
 
 
-<span id="listUsers"/>
 ### listUsers
 List all registered users' information except for passwords.
 
@@ -79,7 +59,6 @@ Use these information to invite others to attend your meetings.
 Usage: `agenda listUsers`
 
 
-<span id="deleteUser"/>
 ### deleteUser
 Delete current login user.
 
@@ -88,38 +67,35 @@ Delete current login user.
 Usage: `agenda deleteUser`
 
 
-<span id="createMeeting"/>
 ### createMeeting
 Create a meeting.
 
-At least one participant should be provided.
+At least one participator should be provided.
 
-Usage: `agenda createMeeting -t title -p participants -s startTime -e endTime`
+Usage: `agenda createMeeting -t title -p participators -s startTime -e endTime`
+
+```
+Flags:
+    -t, --title         string   Title
+    -p, --participators string   participators
+    -s, --start         string   start time  (format: yyyy-mm-dd/hh:mm)
+    -e, --end           string   end time    (format: yyyy-mm-dd/hh:mm)
+```
+
+
+### changeParticipators
+Change(add/delete) participators of a meeting created by current login user.
+
+Usage: `agenda changeParticipators -t title [-d|-a] participators`
 
 ```
 Flags:
     -t, --title        string   Title
-    -p, --participants string   Participants
-    -s, --start        string   start time  (format: yyyy-mm-dd)
-    -e, --end          string   end time    (format: yyyy-mm-dd)
+    -d, --delete       string   participators that you intend to delete
+    -a, --add          string   participators that you intend to add
 ```
 
 
-<span id="changeParticipants"/>
-### changeParticipants
-Change(add/delete) Participants of a meeting created by current login user.
-
-Usage: `agenda changeParticipants -t title [-d|-a] participants`
-
-```
-Flags:
-    -t, --title        string   Title
-    -d, --delete       string   Participants that you intend to delete
-    -a, --add          string   Participants that you intend to add
-```
-
-
-<span id="listMeetings"/>
 ### listMeetings
 List all meetings attended by current login user.
 
@@ -127,11 +103,11 @@ Usage: `agenda listMeetings -s startTime -e endTime`
 
 ```
 Flags:
-    -s, --start        string   start time  (format: yyyy-mm-dd)
-    -e, --end          string   end time    (format: yyyy-mm-dd)
+    -s, --start        string   start time  (format: yyyy-mm-dd/hh:mm)
+    -e, --end          string   end time    (format: yyyy-mm-dd/hh:mm)
 ```
 
-<span id="quitMeeting"/>
+
 ### quitMeeting
 Quit a meeting attended by current login user.
 
@@ -143,7 +119,6 @@ Flags:
 ```
 
 
-<span id="cancelMeeting"/>
 ### cancelMeeting
 Cancel a meeting created by current login user.
 
@@ -155,7 +130,6 @@ Flags:
 ```
 
 
-<span id="clearMeetings"/>
 ### clearMeetings
 clear all meetings created by current login user.
 

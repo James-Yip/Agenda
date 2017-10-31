@@ -15,7 +15,7 @@
 package cmd
 
 import (
-	"fmt"
+	"agenda/service"
 
 	"github.com/spf13/cobra"
 )
@@ -26,7 +26,9 @@ var logoutCmd = &cobra.Command{
 	Short: "User logout",
 	Long:  `Logout the current login user.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("logout called")
+		// fmt.Println("logout called")
+
+		service.Logout()
 	},
 }
 
