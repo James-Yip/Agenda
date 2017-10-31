@@ -15,7 +15,7 @@
 package cmd
 
 import (
-	"fmt"
+	"agenda/service"
 
 	"github.com/spf13/cobra"
 )
@@ -26,7 +26,10 @@ var quitMeetingCmd = &cobra.Command{
 	Short: "Quit a meeting",
 	Long:  `Quit a meeting attended by current login user.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("quitMeeting called")
+		title, _ := cmd.Flags().GetString("title")
+		// fmt.Println("title: " + title)
+
+		service.QuitMeeting(title)
 	},
 }
 
@@ -39,7 +42,6 @@ func init() {
 	// and all subcommands, e.g.:
 	// quitMeetingCmd.PersistentFlags().String("foo", "", "A help for foo")
 
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// quitMeetingCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// local flags for quitMeetingCmd
+	quitMeetingCmd.Flags().StringP("title", "t", "", "Title of the meeting you intend to quit")
 }

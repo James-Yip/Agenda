@@ -15,7 +15,7 @@
 package cmd
 
 import (
-	"fmt"
+	"agenda/service"
 
 	"github.com/spf13/cobra"
 )
@@ -28,7 +28,9 @@ var deleteUserCmd = &cobra.Command{
 Once you do that, you can not find back the deleted user information
 (including the corresponding meeting information).`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("deleteUser called")
+		// fmt.Println("deleteUser called")
+
+		service.DeleteUser()
 	},
 }
 

@@ -15,7 +15,7 @@
 package cmd
 
 import (
-	"fmt"
+	"agenda/service"
 
 	"github.com/spf13/cobra"
 )
@@ -26,7 +26,9 @@ var listUsersCmd = &cobra.Command{
 	Short: "List all registered users",
 	Long:  `List all registered users' information except for passwords.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("listUsers called")
+		// fmt.Println("listUsers called")
+
+		service.ListUsers()
 	},
 }
 

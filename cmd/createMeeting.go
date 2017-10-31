@@ -15,7 +15,7 @@
 package cmd
 
 import (
-	"fmt"
+	"agenda/service"
 
 	"github.com/spf13/cobra"
 )
@@ -25,9 +25,18 @@ var createMeetingCmd = &cobra.Command{
 	Use:   "createMeeting",
 	Short: "Create a meeting",
 	Long: `Create a meeting.
-At least one participant should be provided.`,
+At least one participator should be provided.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("createMeeting called")
+		title, _ := cmd.Flags().GetString("title")
+		participators_str, _ := cmd.Flags().GetString("participators")
+		startTime, _ := cmd.Flags().GetString("start")
+		endTime, _ := cmd.Flags().GetString("end")
+		// fmt.Println("title: " + title)
+		// fmt.Println("participators: " + participators_str)
+		// fmt.Println("startTime: " + startTime)
+		// fmt.Println("endTime: " + endTime)
+
+		service.CreateMeeting(title, participators_str, startTime, endTime)
 	},
 }
 
@@ -40,7 +49,9 @@ func init() {
 	// and all subcommands, e.g.:
 	// createMeetingCmd.PersistentFlags().String("foo", "", "A help for foo")
 
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// createMeetingCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// local flags for createMeetingCmd
+	createMeetingCmd.Flags().StringP("title", "t", "", "title")
+	createMeetingCmd.Flags().StringP("participators", "p", "", "participators")
+	createMeetingCmd.Flags().StringP("start", "s", "", "start time (format: yyyy-mm-dd/hh:mm)")
+	createMeetingCmd.Flags().StringP("end", "e", "", "end time (format: yyyy-mm-dd/hh:mm)")
 }

@@ -27,7 +27,7 @@ Flags:
     -u, --user     string   Username
     -p, --password string   Password
     -e, --email    string   Email
-    -p, --phone    string   Phone
+    -t, --phone    string   Phone
 ```
 
 
