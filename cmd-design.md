@@ -9,7 +9,7 @@ logout              User logout.
 listUsers           List all registered users.
 deleteUser          Delete current login user.
 createMeeting       Create a meeting.
-changeParticipants  Change(add/delete) meeting Participants.
+changeParticipators  Change(add/delete) meeting participators.
 listMeetings        List all meetings.
 quitMeeting         Quit a meeting.
 cancelMeeting       Cancel a meeting.
@@ -70,29 +70,29 @@ Usage: `agenda deleteUser`
 ### createMeeting
 Create a meeting.
 
-At least one participant should be provided.
+At least one participator should be provided.
 
-Usage: `agenda createMeeting -t title -p participants -s startTime -e endTime`
+Usage: `agenda createMeeting -t title -p participators -s startTime -e endTime`
+
+```
+Flags:
+    -t, --title         string   Title
+    -p, --participators string   participators
+    -s, --start         string   start time  (format: yyyy-mm-dd/hh:mm)
+    -e, --end           string   end time    (format: yyyy-mm-dd/hh:mm)
+```
+
+
+### changeParticipators
+Change(add/delete) participators of a meeting created by current login user.
+
+Usage: `agenda changeParticipators -t title [-d|-a] participators`
 
 ```
 Flags:
     -t, --title        string   Title
-    -p, --participants string   Participants
-    -s, --start        string   start time  (format: yyyy-mm-dd)
-    -e, --end          string   end time    (format: yyyy-mm-dd)
-```
-
-
-### changeParticipants
-Change(add/delete) Participants of a meeting created by current login user.
-
-Usage: `agenda changeParticipants -t title [-d|-a] participants`
-
-```
-Flags:
-    -t, --title        string   Title
-    -d, --delete       string   Participants that you intend to delete
-    -a, --add          string   Participants that you intend to add
+    -d, --delete       string   participators that you intend to delete
+    -a, --add          string   participators that you intend to add
 ```
 
 
@@ -103,8 +103,8 @@ Usage: `agenda listMeetings -s startTime -e endTime`
 
 ```
 Flags:
-    -s, --start        string   start time  (format: yyyy-mm-dd)
-    -e, --end          string   end time    (format: yyyy-mm-dd)
+    -s, --start        string   start time  (format: yyyy-mm-dd/hh:mm)
+    -e, --end          string   end time    (format: yyyy-mm-dd/hh:mm)
 ```
 
 
