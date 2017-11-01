@@ -15,7 +15,7 @@
 package cmd
 
 import (
-	"agenda/service"
+	"github.com/James-Yip/Agenda/service"
 
 	"github.com/spf13/cobra"
 )
