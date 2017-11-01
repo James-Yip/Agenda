@@ -19,7 +19,8 @@ type Users []*User
 
 var users Users
 
-func AddUser(user *User) {
+func AddUser(userName string, password string, email string, phone string) {
+	user := &User{userName, password, email, phone}
 	users = append(users, user)
 	userWriteToFile()
 }

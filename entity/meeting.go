@@ -24,9 +24,9 @@ func AddMeeting(title string, sponsor string, participators []string, startTime 
 	meeting := &Meeting{
 		Title:         title,
 		Sponsor:       sponsor,
-		Participators: participators,
 		StartTime:     startTime,
-		EndTime:       endTime}
+		EndTime:       endTime,
+		Participators: participators}
 	meetings = append(meetings, meeting)
 	meetingWriteToFile()
 }
