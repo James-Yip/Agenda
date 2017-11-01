@@ -1,6 +1,6 @@
 package main
 
-import fuck "agenda/util"
+import fuck "agenda/utils"
 import "fmt"
 func main() {
 	var fucjk string

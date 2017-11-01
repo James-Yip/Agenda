@@ -1,4 +1,4 @@
-package util
+package utils
 import "bytes"
 import "strings"
 // format: yyyy-mm-dd/hh:mm
