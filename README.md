@@ -1,4 +1,6 @@
 # Agenda
+[![BuildStatus](https://travis-ci.org/James-Yip/Agenda.svg?branch=v0.5)](https://travis-ci.org/James-Yip/Agenda)
+
 Agenda is a CLI meeting manager program based on cobra.
 
 This application is a tool to support various operations on meetings
