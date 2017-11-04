@@ -2,7 +2,7 @@ package utils
 import "bytes"
 import "strings"
 // format: yyyy-mm-dd/hh:mm
-func time2str(timeStr string) string {
+func Time2str(timeStr string) string {
 	var a = ""
 	var buff =  bytes.NewBufferString(a)
 	
@@ -15,7 +15,7 @@ func time2str(timeStr string) string {
 	return a;
 }
 
-func str2time(time string) string {
+func Str2time(time string) string {
 	var a = ""
 	var buff =  bytes.NewBufferString(a)
 	for i:=0;i<16;i++ {
@@ -42,7 +42,7 @@ func str2time(time string) string {
 	return a;
 }
 
-func isTimeValid(time string) bool {
+func IsTimeValid(time string) bool {
 	a := false
 	if (len(time)!=16) {
 		return a
@@ -65,6 +65,6 @@ func isTimeValid(time string) bool {
 
 // input: "a b c"
 // output: [a b c]
-func str2slice(participator_str string) []string {
+func Str2slice(participator_str string) []string {
 	return strings.Fields(participator_str)
 }
