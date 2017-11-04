@@ -1,4 +1,4 @@
-package utils
+package util
 import "bytes"
 import "strings"
 // format: yyyy-mm-dd/hh:mm
@@ -8,7 +8,7 @@ func Time2str(timeStr string) string {
 	
 	for i:=0;i<16;i++ {
 		if(i!=4&&i!=7&&i!=10&&i!=13) {
-			buff.WriteByte(timeStr[i-1])
+			buff.WriteByte(timeStr[i])
 		}
 	}
 	a=buff.String()
@@ -59,7 +59,7 @@ func IsTimeValid(time string) bool {
 			if (time[i]< '0' || time[i]> '9' ) { return a }
 		}
 	}
-	a=false
+	a=true
 	return a
 }
 
