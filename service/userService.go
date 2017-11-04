@@ -8,6 +8,11 @@ import (
 var CurUser string
 
 func Register(userName string, password string, email string, phone string) {
+	if(CurUser!="") {
+		fmt.Println("您已经是注册用户了！请勿重复注册！")
+		fmt.Println("当前用户是"+CurUser)
+		return
+	}
 	if(userName !=""&&password!=""&&email!=""&&phone!="") {
 		index, _, _ := entity.GetUser(userName);
 		if(index>=0) {
@@ -24,6 +29,11 @@ func Register(userName string, password string, email string, phone string) {
 }
 
 func Login(userName string, password string) {
+	if(CurUser!="") {
+		fmt.Println("您已登录！")
+		fmt.Println("当前用户是"+CurUser)
+		return
+	}
 	if(userName !=""&&password!="") {
 		index, theUser, _ := entity.GetUser(userName);
 		if(index>=0) {
@@ -41,6 +51,10 @@ func Login(userName string, password string) {
 }
 
 func Logout() {
+	if(CurUser == "") {
+		fmt.Println("您未登录！")
+		return
+	}
 	CurUser= ""
 	fmt.Println("退出登录！")
 
@@ -68,6 +82,10 @@ func ListUsers() {
 }
 
 func DeleteUser() {
+	if(CurUser=="") {
+		fmt.Println("请先登录！！！")
+		return 
+	}
 	var err error = entity.DeleteUser(CurUser)
 	if(err!=nil) {
 		fmt.Println(err)

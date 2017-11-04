@@ -2,6 +2,7 @@ package util
 import "bytes"
 import "strings"
 // format: yyyy-mm-dd/hh:mm
+
 func Time2str(timeStr string) string {
 	var a = ""
 	var buff =  bytes.NewBufferString(a)
