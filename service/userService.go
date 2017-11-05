@@ -1,23 +1,27 @@
 package service
 
 import (
-	"agenda/entity"
-	"agenda/utils"
 	"fmt"
+	"github.com/James-Yip/Agenda/entity"
 )
 
-username string
+var CurUser string
 
 func Register(userName string, password string, email string, phone string) {
+	if(CurUser!="") {
+		fmt.Println("您已经是注册用户了！请勿重复注册！")
+		fmt.Println("当前用户是"+CurUser)
+		return
+	}
 	if(userName !=""&&password!=""&&email!=""&&phone!="") {
-		index, theUser, err := GetUser(userName);
+		index, _, _ := entity.GetUser(userName);
 		if(index>=0) {
 			fmt.Println("此用户名已被注册")
 		} else {
 			fmt.Println("用户名可使用，正在注册......")
-			AddUser(userName, password, email, phone)
-			username = userName
-			fmt.Println("注册成功！当前用户是："+username)
+			entity.AddUser(userName, password, email, phone)
+			CurUser= userName
+			fmt.Println("注册成功！当前用户是："+CurUser)
 		}
 	} else {
 		fmt.Println("请检查输入信息是否正确")		
@@ -25,12 +29,17 @@ func Register(userName string, password string, email string, phone string) {
 }
 
 func Login(userName string, password string) {
-	if(userName !=""&&password!=""&&email!=""&&phone!="") {
-		index, theUser, err := GetUser(userName);
+	if(CurUser!="") {
+		fmt.Println("您已登录！")
+		fmt.Println("当前用户是"+CurUser)
+		return
+	}
+	if(userName !=""&&password!="") {
+		index, theUser, _ := entity.GetUser(userName);
 		if(index>=0) {
 			if(theUser.Password == password) {
-				username=userName;
-				fmt.Println("登录成功！当前用户是："+username)
+				CurUser= userName;
+				fmt.Println("登录成功！当前用户是："+CurUser)
 			} else {
 				fmt.Println("密码错误！登录失败！")				
 			}
@@ -42,32 +51,47 @@ func Login(userName string, password string) {
 }
 
 func Logout() {
-	username = ""
+	if(CurUser == "") {
+		fmt.Println("您未登录！")
+		return
+	}
+	CurUser= ""
 	fmt.Println("退出登录！")
 
 }
 
 func ListUsers() {
-	if(username == "") {
+	if(CurUser== "") {
 		fmt.Println("请先登录！！！")
 
 	} else {
-		users :=  GetUsers()
+		users :=  entity.GetUsers()
 		fmt.Println("所有用户信息：")
 		fmt.Println("编号  用户名  电子邮箱  电话号码")
 
 		for index, user := range users {
-			fmt.Println(index+"  "+user.UserName+"  "+user.Email+"  "+user.Phone)
+			fmt.Print(index)
+			fmt.Print(" | ")
+			fmt.Print(user.UserName)
+			fmt.Print(" | ")
+			fmt.Print(user.Email)
+			fmt.Print(" | ")
+			fmt.Print(user.Phone)
 		}
 	}
 }
 
 func DeleteUser() {
-	err:=DeleteUser(username)
-	if(err) {
+	if(CurUser=="") {
+		fmt.Println("请先登录！！！")
+		return 
+	}
+	var err error = entity.DeleteUser(CurUser)
+	if(err!=nil) {
 		fmt.Println(err)
 	} else {
-		fmt.Println("删除用户"+username+"成功")
-		username = ""
+		fmt.Println("删除用户"+CurUser+"成功")
+		fmt.Println("退出登陆")
+		CurUser= ""
 	}
 }

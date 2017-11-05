@@ -1,8 +1,8 @@
 package service
 
 import (
-	"agenda/entity"
-	"agenda/util"
+	"github.com/James-Yip/Agenda/entity"
+	"github.com/James-Yip/Agenda/util"
 	"fmt"
 )
 
