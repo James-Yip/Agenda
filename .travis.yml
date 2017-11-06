@@ -1,4 +1,4 @@
 language: go
 
 go:
-  - tip # The latest version of Go.
+  - 3.0 # The latest version of Go.
