@@ -29,29 +29,29 @@ func IsUserRegistered(userName string) bool {
 
 func Register(userName string, password string, email string, phone string) {
 	if CurUser != "" {
-		fmt.Println("您已经是注册用户了！请勿重复注册！")
-		fmt.Println("当前用户是" + CurUser)
+		fmt.Println("You have been registered！Please don't register repeatedly！")
+		fmt.Println("Current login user: " + CurUser)
 		return
 	}
 	if userName != "" && password != "" && email != "" && phone != "" {
 		index, _, _ := entity.GetUser(userName)
 		if index >= 0 {
-			fmt.Println("此用户名已被注册")
+			fmt.Println("Username repeats")
 		} else {
-			fmt.Println("用户名可使用，正在注册......")
+			fmt.Println("Username available，registering......")
 			entity.AddUser(userName, password, email, phone)
 			entity.UpdateCurUser(userName)
-			fmt.Println("注册成功！当前用户是：" + userName)
+			fmt.Println("Register: success\nCurrent login user: " + userName)
 		}
 	} else {
-		fmt.Println("请检查输入信息是否正确")
+		fmt.Println("Please check your input validity.")
 	}
 }
 
 func Login(userName string, password string) {
 	if CurUser != "" {
-		fmt.Println("您已登录！")
-		fmt.Println("当前用户是" + CurUser)
+		fmt.Println("You have been logged-in！")
+		fmt.Println("Current login user: " + CurUser)
 		return
 	}
 	if userName != "" && password != "" {
@@ -59,12 +59,12 @@ func Login(userName string, password string) {
 		if index >= 0 {
 			if theUser.Password == password {
 				entity.UpdateCurUser(userName)
-				fmt.Println("登录成功！当前用户是：" + userName)
+				fmt.Println("Login: success\nCurrent login user: " + userName)
 			} else {
-				fmt.Println("密码错误！登录失败！")
+				fmt.Println("Login: fail\nPassword incorrect")
 			}
 		} else {
-			fmt.Println("用户名错误！登录失败！")
+			fmt.Println("Login: fail\nUser unfound")
 		}
 	}
 
@@ -72,21 +72,20 @@ func Login(userName string, password string) {
 
 func Logout() {
 	if CurUser == "" {
-		fmt.Println("您未登录！")
+		fmt.Println("Logout: fail\nYou aren't logged-in")
 		return
 	}
 	entity.UpdateCurUser("")
-	fmt.Println("退出登录！")
+	fmt.Println("Logout: success")
 }
 
 func ListUsers() {
 	if CurUser == "" {
-		fmt.Println("请先登录！！！")
-
+		fmt.Println("Please login first")
 	} else {
 		users := entity.GetUsers()
-		fmt.Println("所有用户信息：")
-		fmt.Println("编号  用户名  电子邮箱  电话号码")
+		fmt.Println("All User Information:")
+		fmt.Println("index  username  email  phone")
 
 		for index, user := range users {
 			fmt.Printf("%d | %s | %s | %s\n", index, user.UserName, user.Email, user.Phone)
@@ -96,15 +95,15 @@ func ListUsers() {
 
 func DeleteUser() {
 	if CurUser == "" {
-		fmt.Println("请先登录！！！")
+		fmt.Println("Please login first")
 		return
 	}
 	var err error = entity.DeleteUser(CurUser)
 	if err != nil {
 		fmt.Println(err)
 	} else {
-		fmt.Println("删除用户" + CurUser + "成功")
-		fmt.Println("退出登陆")
+		fmt.Printf("DeleteUser(%s): success\n", CurUser)
+		fmt.Println("Logout")
 		entity.UpdateCurUser("")
 	}
 }
