@@ -7,9 +7,11 @@ This application is a tool to support various operations on meetings
 including user register, meeting creation & query, etc.
 
 ## Collaborators
-15331376 叶政
-15331395 张力越
-15331377 伊少波
+15331376 叶政 负责整体框架搭建 & User和Meeting实体json文件读写
+
+15331395 张力越 负责有关user命令的业务逻辑实现 & 工具函数实现(util)
+
+15331377 伊少波 负责有关meeting命令的业务逻辑实现
 
 ## Usage
 ```
@@ -45,86 +47,125 @@ See `cmd-design.md` for information about each command.
 ### register
 ```
 $ ./agenda register -u james -p 123456 -e james@qq.com -t 13623887454
-用户名可使用，正在注册......
-注册成功！当前用户是：james
+Username available，registering......
+Register: success
+Current login user: james
+
 $ ./agenda register
-请检查输入信息是否正确
+You have been registered！Please don't register repeatedly！
+Current login user: james
+
 $ ./agenda register -u james -p 123456 -e james@qq.com -t 13623887454
-此用户名已被注册
+Username repeats
 ```
 
 ### login
 ```
 $ ./agenda login -u james -p 123456
-登录成功！当前用户是：james
-$ ./agenda login -u bob -p 123456
-用户名错误！登录失败！
+Login: success
+Current login user: james
+
+$ ./agenda login -u jame -p 123456
+Login: fail
+User unfound
+
 $ ./agenda login -u james -p 123
-密码错误！登录失败！
+Login: fail
+Password incorrect
 ```
 
 ### logout
 ```
 $ ./agenda logout
-退出登录！
+Logout: success
+
 $ ./agenda logout
-您未登录！
+Logout: fail
+You aren't logged-in
 ```
 
 ### listUsers
 ```
 $ ./agenda listUsers
-所有用户信息：
-编号  用户名  电子邮箱  电话号码
-0 | james | james@qq.com | 13623887454
+All User Information:
+index  username  email  phone
+0 | bob | bob@qq.com | 15044569825
+1 | james | james@qq.com | 13623887454
+2 | alice | alice@qq.com | 13765845784
 ```
 
 
 ### deleteUser
 ```
 $ ./agenda deleteUser
-删除用户james成功
-退出登陆
+DeleteUser(james): success
+Logout
+
 $ ./agenda deleteUser
-请先登录！！！
+Please login first
 ```
 
 ### createMeeting
 ```
-$ ./agenda createMeeting -t singleDog -p "bob" -s 2017-11-11/11:11 -e 2017-11-11/11:22
+$ ./agenda createMeeting -t singleDog -p "bob alice" -s 2017-11-11/11:11 -e 2017-11-11/11:22
+create meeting success.
+singleDog | james | 2017-11-11/11:11 | 2017-11-11/11:22 | [bob]
 
 $ ./agenda createMeeting -t coding -p "alice" -s 2017-11-11/11:00 -e 2017-11-11/12:00
+alice have not time.
 
 $ ./agenda createMeeting -t coding -p "alice" -s 2017-11-12/11:00 -e 2017-11-12/12:00
+create meeting success.
+coding | james | 2017-11-12/11:00 | 2017-11-12/12:00 | [alice]
 ```
 
 ### changeParticipators
 ```
-$ ./agenda changeParticipators -t singleDog -a alice
+$ ./agenda changeParticipators -t coding -a bob
+add participators success.
+coding | james | 2017-11-12/11:00 | 2017-11-12/12:00 | [alice bob]
 
-$ ./agenda changeParticipators -t singleDog -d bob
+$ ./agenda changeParticipators -t singleDog -d alice
+delete participators success.
+singleDog | james | 2017-11-11/11:11 | 2017-11-11/11:22 | [bob]
 ```
 
 ### listMeetings
 ```
 $ ./agenda listMeetings -s 2017-11-11/11:11 -e 2017-11-11/11:22
+Your meeting information：
+title  sponsor  startTime  endTime  participators
+singleDog | james | 2017-11-11/11:11 | 2017-11-11/11:22 | [bob]
+
+Total meeting amount:  1
 ```
 
 ### quitMeeting
 ```
-$ ./agenda quitMeeting -t singleDog
+$ ./agenda quitMeeting -t coding
+quit done.
 ```
 
 ### cancelMeeting
 ```
 $ ./agenda cancelMeeting -t coding
+cancel done.
 
 $ ./agenda listMeetings -s 2017-11-11/11:10 -e 2017-11-13/11:30
+Your meeting information：
+title  sponsor  startTime  endTime  participators
+singleDog | james | 2017-11-11/11:11 | 2017-11-11/11:22 | [bob]
+Total meeting amount:  1
+
 ```
 
 ### clearMeetings
 ```
 $ ./agenda clearMeetings
+clear total 1 meetings done.
 
 $ ./agenda listMeetings -s 2017-11-11/11:10 -e 2017-11-13/11:30
+Your meeting information：
+title  sponsor  startTime  endTime  participators
+Total meeting amount:  0
 ```
