@@ -17,6 +17,16 @@ func init() {
 	}
 }
 
+func IsUserRegistered(userName string) bool {
+	users := entity.GetUsers()
+	for _, user := range users {
+		if user.UserName == userName {
+			return true
+		}
+	}
+	return false
+}
+
 func Register(userName string, password string, email string, phone string) {
 	if CurUser != "" {
 		fmt.Println("您已经是注册用户了！请勿重复注册！")
@@ -79,13 +89,6 @@ func ListUsers() {
 		fmt.Println("编号  用户名  电子邮箱  电话号码")
 
 		for index, user := range users {
-			// fmt.Print(index)
-			// fmt.Print(" | ")
-			// fmt.Print(user.UserName)
-			// fmt.Print(" | ")
-			// fmt.Print(user.Email)
-			// fmt.Print(" | ")
-			// fmt.Print(user.Phone)
 			fmt.Printf("%d | %s | %s | %s\n", index, user.UserName, user.Email, user.Phone)
 		}
 	}
