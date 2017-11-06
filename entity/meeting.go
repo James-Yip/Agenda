@@ -62,6 +62,7 @@ func UpdateParticipators(title string, participators []string) error {
 	} else {
 		meetings[index].Participators = participators
 	}
+	meetingWriteToFile()
 	return nil
 }
 
