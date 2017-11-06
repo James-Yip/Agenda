@@ -30,7 +30,7 @@ func CreateMeeting(title string, participators_str string, startTime string, end
 	}
 	if util.Time2str(startTime) > util.Time2str(endTime) ||
 		util.Time2str(startTime) == util.Time2str(endTime) {
-		fmt.Println("start_time should < end_time")
+		fmt.Println("startTime should < endTime")
 		return
 	}
 	if len(participators) <= 0 {

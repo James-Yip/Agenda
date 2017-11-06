@@ -61,10 +61,10 @@ func Login(userName string, password string) {
 				entity.UpdateCurUser(userName)
 				fmt.Println("Login: success\nCurrent login user: " + userName)
 			} else {
-				fmt.Println("Login: fail\nPassword incorrect")
+				fmt.Println("Login: fail\nPassword incorrect.")
 			}
 		} else {
-			fmt.Println("Login: fail\nUser unfound")
+			fmt.Println("Login: fail\nUser unfound.")
 		}
 	}
 
@@ -72,7 +72,7 @@ func Login(userName string, password string) {
 
 func Logout() {
 	if CurUser == "" {
-		fmt.Println("Logout: fail\nYou aren't logged-in")
+		fmt.Println("Logout: fail\nYou aren't logged-in.")
 		return
 	}
 	entity.UpdateCurUser("")
@@ -81,7 +81,7 @@ func Logout() {
 
 func ListUsers() {
 	if CurUser == "" {
-		fmt.Println("Please login first")
+		fmt.Println("Please login first.")
 	} else {
 		users := entity.GetUsers()
 		fmt.Println("All User Information:")
@@ -95,7 +95,7 @@ func ListUsers() {
 
 func DeleteUser() {
 	if CurUser == "" {
-		fmt.Println("Please login first")
+		fmt.Println("Please login first.")
 		return
 	}
 	var err error = entity.DeleteUser(CurUser)

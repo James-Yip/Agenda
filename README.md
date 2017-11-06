@@ -13,6 +13,7 @@ including user register, meeting creation & query, etc.
 
 15331377 伊少波 负责有关meeting命令的业务逻辑实现
 
+注:伊少波负责的部分后来由叶政最终commit并push到github上
 ## Usage
 ```
 Usage:
