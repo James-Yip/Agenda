@@ -10,7 +10,7 @@ import (
 func CreateMeeting(title string, participators_str string, startTime string, endTime string) {
 	if CurUser == "" {
 		fmt.Println("please login first.")
-		//return
+		return
 	}
 	meetings := entity.GetMeetings()
 	participators := util.Str2slice(participators_str)
@@ -31,6 +31,10 @@ func CreateMeeting(title string, participators_str string, startTime string, end
 	if util.Time2str(startTime) > util.Time2str(endTime) ||
 		util.Time2str(startTime) == util.Time2str(endTime) {
 		fmt.Println("starttime should < endtime")
+		return
+	}
+	if len(participators) <= 0 {
+		fmt.Println("participators should >= 1")
 		return
 	}
 	for _, user := range participators {
@@ -56,7 +60,7 @@ func CreateMeeting(title string, participators_str string, startTime string, end
 func AddParticipators(title string, add_participators_str string) {
 	if CurUser == "" {
 		fmt.Println("please login first.")
-		//return
+		return
 	}
 	_, meeting, err := entity.GetMeeting(title)
 	if err != nil {
@@ -89,7 +93,7 @@ func AddParticipators(title string, add_participators_str string) {
 func DeleteParticipators(title string, delete_participators_str string) {
 	if CurUser == "" {
 		fmt.Println("please login first.")
-		//return
+		return
 	}
 	_, meeting, err := entity.GetMeeting(title)
 	if err != nil {
@@ -127,7 +131,7 @@ func DeleteParticipators(title string, delete_participators_str string) {
 func ListMeetings(startTime, endTime string) {
 	if CurUser == "" {
 		fmt.Println("please login first.")
-		//return
+		return
 	}
 	if !util.IsTimeValid(startTime) || !util.IsTimeValid(endTime) {
 		fmt.Println("time is not valid")
@@ -162,7 +166,7 @@ func ListMeetings(startTime, endTime string) {
 func QuitMeeting(title string) {
 	if CurUser == "" {
 		fmt.Println("please login first.")
-		//return
+		return
 	}
 	_, meeting, err := entity.GetMeeting(title)
 	if err == nil {
@@ -186,7 +190,7 @@ func QuitMeeting(title string) {
 func CancelMeeting(title string) {
 	if CurUser == "" {
 		fmt.Println("please login first.")
-		//return
+		return
 	}
 	_, meeting, err := entity.GetMeeting(title)
 	if err == nil {
@@ -204,7 +208,7 @@ func CancelMeeting(title string) {
 func ClearMeetings() {
 	if CurUser == "" {
 		fmt.Println("please login first.")
-		//return
+		return
 	}
 	var del_title []string
 	meetings := entity.GetMeetings()
@@ -270,9 +274,5 @@ func IsUserHaveTime(user string, start, end string) bool {
 			}
 		}
 	}
-	return true
-}
-
-func IsUserRegistered(user string) bool {
 	return true
 }
