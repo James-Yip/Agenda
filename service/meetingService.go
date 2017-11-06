@@ -28,6 +28,11 @@ func CreateMeeting(title string, participators_str string, startTime string, end
 		fmt.Println("time is not normative.")
 		return
 	}
+	if util.Time2str(startTime) > util.Time2str(endTime) ||
+		util.Time2str(startTime) == util.Time2str(endTime) {
+		fmt.Println("starttime should < endtime")
+		return
+	}
 	for _, user := range participators {
 		if user == CurUser {
 			fmt.Println("login user can't be the particitor.")
@@ -37,12 +42,15 @@ func CreateMeeting(title string, participators_str string, startTime string, end
 			fmt.Println(user + " is not registered.")
 			return
 		}
-		if !IsUserTimeVaild(user, startTime, endTime) {
+		if !IsUserHaveTime(user, startTime, endTime) {
 			fmt.Println(user + " have not time.")
 			return
 		}
 	}
 	entity.AddMeeting(title, CurUser, participators, startTime, endTime)
+	fmt.Println("create meeting success.")
+	_, meeting, _ := entity.GetMeeting(title)
+	PrintMeeting(meeting)
 }
 
 func AddParticipators(title string, add_participators_str string) {
@@ -66,19 +74,16 @@ func AddParticipators(title string, add_participators_str string) {
 			fmt.Println(user + " is not registered")
 			return
 		}
-		if !IsUserTimeVaild(user, meeting.StartTime, meeting.EndTime) {
+		if !IsUserHaveTime(user, meeting.StartTime, meeting.EndTime) {
 			fmt.Println(user + " have not time.")
 			return
 		}
 		changed_par = append(changed_par, user)
 	}
-	//_, meeting, err = entity.GetMeeting(title)
-	//for _, i := range meeting.Participators {
-	//	fmt.Println(i)
-	//}
 	entity.UpdateParticipators(title, changed_par)
-	//fmt.Println(len(meeting.Participators))
-	fmt.Println("change participator done.")
+	fmt.Println("add participators success.")
+	_, meeting, _ = entity.GetMeeting(title)
+	PrintMeeting(meeting)
 }
 
 func DeleteParticipators(title string, delete_participators_str string) {
@@ -110,10 +115,12 @@ func DeleteParticipators(title string, delete_participators_str string) {
 	}
 	if len(changed_par) == 0 {
 		entity.DeleteMeeting(meeting.Title)
-		fmt.Println("delete particitors done(the meeting is del too).")
+		fmt.Println("delete participators done(the meeting is del because no participators).")
 	} else {
 		entity.UpdateParticipators(title, changed_par)
-		fmt.Println("delete particitors done.")
+		fmt.Println("delete participators success.")
+		_, meeting, _ = entity.GetMeeting(title)
+		PrintMeeting(meeting)
 	}
 }
 
@@ -129,6 +136,7 @@ func ListMeetings(startTime, endTime string) {
 	meetings := entity.GetMeetings()
 	ss := util.Time2str(startTime)
 	ee := util.Time2str(endTime)
+	meetingnum := 0
 	for _, meeting := range meetings {
 		//fmt.Println(len(meeting.Participators))
 		s := util.Time2str(meeting.StartTime)
@@ -136,17 +144,19 @@ func ListMeetings(startTime, endTime string) {
 		if (s > ss && s < ee) ||
 			(e > ss && (e < ee || e == ee)) {
 			if meeting.Sponsor == CurUser {
+				meetingnum++
 				PrintMeeting(meeting)
 			}
 			for _, str := range meeting.Participators {
 				if CurUser == str {
+					meetingnum++
 					PrintMeeting(meeting)
 					break
 				}
 			}
 		}
 	}
-	fmt.Println("list meetings done.")
+	fmt.Println("list total", meetingnum, "meetings done.")
 }
 
 func QuitMeeting(title string) {
@@ -156,29 +166,17 @@ func QuitMeeting(title string) {
 	}
 	_, meeting, err := entity.GetMeeting(title)
 	if err == nil {
-		if meeting.Sponsor == CurUser {
-			entity.DeleteMeeting(title)
-		} else {
-			var change_par []string
-			isUserPar := false
-			for _, participator := range meeting.Participators {
-				if participator != CurUser {
-					change_par = append(change_par, participator)
-				} else {
-					isUserPar = true
-				}
-			}
-			if len(change_par) == 0 {
+		if IsUserAttend(meeting, CurUser) {
+			if len(meeting.Participators) == 1 {
 				entity.DeleteMeeting(title)
 				fmt.Println("quit done(meeting has been cancle).")
-				return
-			}
-			if isUserPar {
-				entity.UpdateParticipators(title, change_par)
-				fmt.Println("quit done.")
 			} else {
-				fmt.Println("you don't attend the meeting.")
+				changed_par := Remove(meeting.Participators, CurUser)
+				entity.UpdateParticipators(title, changed_par)
+				fmt.Println("quit done.")
 			}
+		} else {
+			fmt.Println("you don't attend the meeting.")
 		}
 	} else {
 		fmt.Println("can't find this meeting.")
@@ -208,13 +206,17 @@ func ClearMeetings() {
 		fmt.Println("please login first.")
 		//return
 	}
+	var del_title []string
 	meetings := entity.GetMeetings()
 	for _, meeting := range meetings {
 		if meeting.Sponsor == CurUser {
-			entity.DeleteMeeting(meeting.Title)
+			del_title = append(del_title, meeting.Title)
 		}
 	}
-	fmt.Println("clear meetings done.")
+	for _, title := range del_title {
+		entity.DeleteMeeting(title)
+	}
+	fmt.Println("clear total", len(del_title), "meetings done.")
 }
 
 func PrintMeeting(meeting *entity.Meeting) {
@@ -249,7 +251,7 @@ func IsUserAttend(meeting *entity.Meeting, user string) bool {
 	return false
 }
 
-func IsUserTimeVaild(user string, start, end string) bool {
+func IsUserHaveTime(user string, start, end string) bool {
 	meetings := entity.GetMeetings()
 	ss := util.Time2str(start)
 	ee := util.Time2str(end)
