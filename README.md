@@ -6,14 +6,6 @@ Agenda is a CLI meeting manager program based on cobra.
 This application is a tool to support various operations on meetings
 including user register, meeting creation & query, etc.
 
-## Collaborators
-15331376 叶政 负责整体框架搭建 & User和Meeting实体json文件读写
-
-15331395 张力越 负责有关user命令的业务逻辑实现 & 工具函数实现(util)
-
-15331377 伊少波 负责有关meeting命令的业务逻辑实现
-
-注:伊少波负责的部分后来由叶政最终commit并push到github上
 ## Usage
 ```
 Usage:
